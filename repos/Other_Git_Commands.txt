@@ -1,0 +1,27 @@
+--------------------------------------------------------------------------------
+Misc Git Commands
+--------------------------------------------------------------------------------
+See README.txt file for the more common Git commands run on daily basis.
+
+# List all config settings
+git config --list --show-origin
+
+# Show changes between commits
+# See difference between uncommitted changes and the last committed version.
+git diff README_git.txt
+git difftool README_git.txt
+
+# List version history for a file, including the renames
+git log --follow [filename]
+
+# List formatted history for a file (custom script I wrote in n87906@cilappxd1193:~/bin)
+githist [filename]
+
+# Remove the most recent commit (and commit again!)
+git reset HEAD~1
+
+# Revert back to the last committed version
+git checkout .
+# or for a specific file:
+git checkout -- <filename>
+

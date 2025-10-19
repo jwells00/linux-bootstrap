@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Convenience Dental ASG script to setup preferred environment.
+#
+# This script should be sourced to set the users environment properly.  Check for this:
+[[ "${BASH_SOURCE[0]}" = "${0}" ]] && echo "This script should be sourced... like this: \". ${BASH_SOURCE[0]}\""
+
+#
+# Screen uses "Dynamic Prompts" via the "null title-escape-sequence" (ESC k ESC \) as
+# part of your prompt.  In RHEL6, there was a bug in /etc/bashrc for PROMPT_COMMAND
+# which is fixed in RHEL7.  But now it causes screen titles to be dynamic, so change
+# PROMPT_COMMAND so it will just display the username as the screen title:
+#
+#PROMPT_COMMAND='printf "\033k%s\033\\" "${USER}"'; export PROMPT_COMMAND
+
+#
+# Set command prompt to:
+#   user@hostname:\path\path
+#   $
+#
+export PS1='\n\u@\h:\w\n\$ '
+
+# Make current directory first on search path
+export PATH=.:$PATH
+
+#
+# Tweak terminal emulator to support extended characters.
+# Ensure your terminal emulator is configured to support UTF8 charset.  For SecureCRT:
+# Session Options, Terminal, Appearance, in "Character encoding" dropdown select "UTF-8".
+# Then set LC_ALL environment variable:
+export LC_ALL=en_US.UTF-8
+
+# -----------------------------------------------------------------------------
+# Aliases - General Utility
+# -----------------------------------------------------------------------------
+alias check='ps -ef | grep -i'
+alias ll='ls -lhN'
+alias lld="ls -lh | grep '^d'"
+alias lldl='ls -lhd */'
+alias llf="ls -lh | egrep -v '^d'"
+alias lll='echo "Largest 20 files:";ls -l | sort -k5 -n | tail -20'
+alias du1='du -h --max-depth=1'
+alias du1s='du -h --max-depth=1 | sort --human-numeric-sort'
+alias dfl="df -hP"
+alias dfnfs="df -hP|grep ":"|sort"
+alias check='ps -ef | grep -i'
+alias ptree='pstree -Ahp'
+alias mon='nmon'
+alias tree='tree -A'
+

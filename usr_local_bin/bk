@@ -1,0 +1,26 @@
+#!/bin/bash
+# Backup all files specified on the command line (including wildcards) to a new corresponding
+# file of the same name with a datastamp appended.  Backup file(s) will retain last modification
+# date of original file.
+# JWells, Nov-2002
+#
+# Find all files except directories
+for TARGETFILE in `ls -1dp $* | grep -iv /`
+do
+ (
+  # Backup file is same name with ".YYMMDD" extension.  If a file with this same name
+  # exists, then append hours, minutes, and seconds to date.
+  BKUPFILE="$TARGETFILE.`date +%y%m%d`"
+  if [ -f $BKUPFILE ]
+  then
+     BKUPFILE="$TARGETFILE.`date +%y%m%d%H%M%S`"
+  fi
+  # Rename target file maintaining last modification date.  Then copy to renamed file
+  # back to the original name while maintaining original permissions and update the 
+  # modification date to the current date.
+  mv $TARGETFILE $BKUPFILE
+  cp -p $BKUPFILE $TARGETFILE
+  touch $TARGETFILE
+ )
+done
+

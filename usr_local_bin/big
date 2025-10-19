@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# List all files larger than 1GB in current directory path,
+# in YMD-HMS date format, sorted by filesize, with nicely aligned columns
+#
+# Example:
+#
+#      big    (defaults to 1G)
+#      big 5M
+#
+FILESIZE="${1:-1G}"
+echo
+echo List all files larger than ${FILESIZE} sorted by size:
+echo
+find . -type f -size +${FILESIZE} -exec ls -lh --time-style=long-iso {} \; | sort -k 5 --human-numeric-sort | column -t
+

@@ -1,0 +1,99 @@
+#!/bin/bash
+#
+# rotate - Copies source file (typically a logfile) to same name with
+#          incremented sequence number, then truncates source file.
+# JWells, Sep-2017
+#
+
+#
+# Look for -v argument (will cause script to have verbose output)
+#
+while getopts ":v" OPT; do
+  case $OPT in
+    v)
+      # Set verbose flag
+      VERBOSE_FLAG=${OPT}
+      # Since "-v" option was used, use shift to reset 1st argument to the filename argument
+      shift
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      printf "%s\n" "Usage: ${0##*/} [-v] [/path/]logfile" >&2
+      exit 1
+      ;;
+  esac
+done
+
+#
+# Convenience function for printing verbose output
+#
+function verbose_print () {
+    if [ "${VERBOSE_FLAG}" == "v" ]
+    then
+        echo "$@"
+    fi
+}
+verbose_print "Verbose mode is on"
+
+#
+# Ensure filename argument passed in
+#
+if [ $# -ne 1 ]
+then
+    printf "%s\n" "Usage: ${0##*/} [-v] [/path/]logfile" >&2
+    exit 1
+fi
+LOGFILE_ARG=${1}
+
+#
+# Ensure logfile exists
+#
+if [ ! -e "${LOGFILE_ARG}" ]
+then
+    printf "%s\n" "\"${LOGFILE_ARG}\" not found" >&2
+    exit 1
+fi
+if [ ! -f "${LOGFILE_ARG}" ]
+then
+    printf "%s\n" "\"${LOGFILE_ARG}\" must be a regular file (not a directory or device file)" >&2
+    exit 1
+fi
+
+#
+# Use Bash "variable expansion" to separate pathname from filename.
+#
+LOGFILE_PATH=${LOGFILE_ARG%/*}
+LOGFILE_NAME=${LOGFILE_ARG##*/}
+if [ "${LOGFILE_PATH}" != "${LOGFILE_NAME}" ]
+then
+  cd ${LOGFILE_PATH}
+else
+  LOGFILE_PATH="./"
+fi
+verbose_print "LOGFILE_ARG.........: ${LOGFILE_ARG}"
+verbose_print "LOGFILE_PATH........: ${LOGFILE_PATH}"
+verbose_print "LOGFILE_NAME........: ${LOGFILE_NAME}"
+verbose_print "PWD.................: ${PWD}"
+
+#
+# Log rotation: find next available sequence number
+#
+SEQ=1
+printf -v SEQPADDED "%02d" $SEQ
+while [ -f "${LOGFILE_NAME}.${SEQPADDED}" ]
+do
+  verbose_print "${SEQ}"
+  SEQ=$((SEQ+1))
+  printf -v SEQPADDED "%02d" $SEQ
+done
+verbose_print "SEQ.................: ${SEQ}"
+verbose_print "SEQPADDED...........: ${SEQPADDED}"
+verbose_print "LOGFILE bkup........: ${LOGFILE_NAME}.${SEQPADDED}"
+
+#
+# Log rotation: copy source file to same name with sequence appended and then truncate source file.
+#
+cp ${LOGFILE_NAME} ${LOGFILE_NAME}.${SEQPADDED}
+>${LOGFILE_NAME}
+
+

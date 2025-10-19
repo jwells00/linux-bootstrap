@@ -1,0 +1,21 @@
+
+Resolve a merge conflict caused by competing line changes
+---------------------------------------------------------
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line
+
+Example: After a pull you get this message:
+	Auto-merging jbstarttime
+	CONFLICT (content): Merge conflict in jbstarttime
+	Automatic merge failed; fix conflicts and then commit the result.
+
+# Generate a list of the files affected by the merge conflict
+git status
+
+# Edit the file indicated and search for "<<<<<<< HEAD" where you will see both
+# changes that caused the merge conflict.  Change as necessary to your liking.
+vi jbstarttime
+
+# Add and commit your changes
+git add .
+git commit -m "Merged changes in local and remote for conflict on jbstarttime."
+

@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# Lists server information.
+# (based on script published at http://community.spiceworks.com/scripts/show/2127-quick-system-information-on-a-linux-host)
+#
+export PATH=/sbin:$PATH
+IFS=$'\n'
+UPTIME=`uptime`
+D_UP=${UPTIME:1}
+MYGROUPS=`groups`
+DATE=`date`
+KERNEL=`uname -a`
+CPWD=`pwd`
+ME=`whoami`
+CPU=`arch`
+
+#
+# Get Linux distro
+# Various distros use these files:
+#   /etc/system-release (RHEL flavors)
+#   /etc/issue.net      (Debian flavors)
+#   /etc/issue
+#   /etc/os-release     (all flavors)
+# Try /etc/system-release first, but if missing parse /etc/os-release.
+#
+DISTRO_FILE=/etc/system-release
+if [ -f "${DISTRO_FILE}" ]; then
+    SYSINFO=`cat ${DISTRO_FILE}`
+else 
+    SYSINFO=`grep PRETTY_NAME /etc/os-release | awk -F\" '{print $2}'`
+fi
+
+printf "\n"
+printf "=== SYSTEM INFO ==========================================================================\n"
+printf "  Date\t\t: "$DATE"\n"
+printf "  Uptime\t: "$D_UP"\n"
+printf "  Distro info\t: "$SYSINFO"\n"
+printf "  Kernel\t: "$KERNEL"\n"
+printf "  Architecture\t: "$CPU"\n"
+free -mt | awk '
+/Mem/{print "  Memory\t: Total: " $2 "Mb\tUsed: " $3 "Mb\tFree: " $4 "Mb"}
+/Swap/{print "  Swap\t\t: Total: " $2 "Mb\tUsed: " $3 "Mb\tFree: " $4 "Mb"}'
+cat /proc/cpuinfo | grep "model name\|processor" | awk '
+/processor/{printf "  Processor\t: " $3 " - " }
+/model\ name/{
+i=4
+while(i<=NF){
+        printf $i
+        if(i<NF){
+                printf " "
+        }
+        i++
+}
+printf "\n"
+}'
+printf "\n"
+printf "=== NETWORK INFO =========================================================================\n"
+printf "  Hostname\t: "$HOSTNAME"\n"
+ip -o addr | awk '/inet /{print "  IP (" $2 ")\t: " $4}'
+/sbin/route -n | awk '/^0.0.0.0/{ printf "  Gateway\t: "$2"\n" }'
+cat /etc/resolv.conf | awk '/^nameserver/{ printf "  Name Server\t: " $2 "\n"}'
+printf "\n"
+printf "=== USER INFO ============================================================================\n"
+printf "  User\t\t: "$ME" (uid:"$UID")\n"
+printf "  Groups\t: "$MYGROUPS"\n"
+printf "  Working dir\t: "$CPWD"\n"
+printf "  Home dir\t: "$HOME"\n"
+printf "\n"
+
