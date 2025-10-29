@@ -21,7 +21,7 @@ cd $(dirname ${BASH_SOURCE})
 #
 # Put common scripts in /usr/local/bin
 #
-cp ./usr_local_bin/* /usr/local/bin
+cp -v ./usr_local_bin/* /usr/local/bin
 cd /usr/local/bin
 chmod 755 big bk rotate serverinfo
 chmod 644 commonenv
@@ -30,7 +30,7 @@ cd -
 #
 # Put custom environment scripts in /etc/profile.d
 #
-cp ./etc_profile_d/* /etc/profile.d
+cp -v ./etc_profile_d/* /etc/profile.d
 cd /etc/profile.d
 chmod 644 01-custom-defaults.sh ZZ-custom-overrides.sh
 cd -

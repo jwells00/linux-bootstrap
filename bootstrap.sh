@@ -17,5 +17,5 @@ chmod 644 .vimrc
 cd -
 
 # Put Git "how-to" cheat sheets in ~/repos
-cp ./repos/* ~/repos
+cp -v ./repos/* ~/repos
 find ~/repos -maxdepth 1 -type f -exec chmod 664 {} \;
