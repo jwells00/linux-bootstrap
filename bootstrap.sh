@@ -11,7 +11,7 @@ cd $(dirname ${BASH_SOURCE})
 sudo ./bootstrap_root.sh
 
 # Put config/preference files in HOME
-cp ./home/* ~
+cp -a ./home/* ~
 cd ~
 chmod 644 .vimrc
 cd -
