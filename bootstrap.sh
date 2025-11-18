@@ -11,7 +11,7 @@ cd $(dirname ${BASH_SOURCE})
 sudo ./bootstrap_root.sh
 
 # Put config/preference files in HOME
-# Note: be very careful to spell out all hidden files.. if you are not you might
+# Note: Be very careful to spell out all hidden files.. if you do not you might
 # mistakenly include "." which could overwrite the permissions on $HOME.  This
 # was noticed during unit testing.  A better technique would be to use the find
 # command with "-type f" and loop through the result copying each file and changing

@@ -35,3 +35,12 @@ cd linux_bootstrap
 Then logout and login to confirm new environment is set properly.
 
 ## Optional Component Setup
+
+# ~/bin
+~~~
+# Setup $HOME/bin
+cd ~
+mkdir bin
+cd bin
+git clone https://github.com/jwells00/linux-bin.git ./bin
+~~~
