@@ -36,7 +36,7 @@ Then logout and login to confirm new environment is set properly.
 
 ## Optional Component Setup
 
-# ~/bin
+### ~/bin
 ~~~
 # Setup $HOME/bin
 cd ~
