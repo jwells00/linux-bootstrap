@@ -18,19 +18,29 @@ alias cp='cp -v'
 #
 cd $(dirname ${BASH_SOURCE})
 
-#
-# Put common scripts in /usr/local/bin
-#
+
+echo "****************************************************************************"
+echo "Put common scripts in /usr/local/bin"
+echo "****************************************************************************"
 cp -v ./usr_local_bin/* /usr/local/bin
 cd /usr/local/bin
 chmod 755 big bk rotate serverinfo
 chmod 644 commonenv
 cd -
 
-#
-# Put custom environment scripts in /etc/profile.d
-#
+echo "****************************************************************************"
+echo "Put custom environment scripts in /etc/profile.d"
+echo "****************************************************************************"
 cp -v ./etc_profile_d/* /etc/profile.d
 cd /etc/profile.d
 chmod 644 01-custom-defaults.sh ZZ-custom-overrides.sh
 cd -
+
+echo "****************************************************************************"
+echo "Change timezone to EST"
+echo "****************************************************************************"
+timedatectl set-timezone America/New_York
+# List current timezone
+timedatectl
+
+
