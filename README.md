@@ -36,11 +36,26 @@ Then logout and login to confirm new environment is set properly.
 
 ## Optional Component Setup
 
-### ~/bin
+### Configure SSH Key in GitHub
+The step above created a local SSH public and private key pair.  Follow these steps to add them in your GitHub account.
+1) Copy the public key into your clipboard.
 ~~~
-# Setup $HOME/bin
+cat ~/.ssh/${HOSTNAME}_id_rsa.pub
+~~~
+2) Login to your GitHub account and click on your avatar in upper right, then:
+   - Settings
+   - SSH and GPH keys (on the left side of screen)
+   - New SSH key button
+3) Enter:
+   ~~~
+   - Title.....: <user>@<clienthost> (ex: centos@novi1, opc@ncglxo01, jwells@OPTI5080)
+   - Key Type..: Authentication Key
+   - Key.......: Paste in contents of id_rsa.pub key copied above.
+   ~~~
+   Then click "Add SSH Key" button.
+
+### Setup ~/bin
+~~~
 cd ~
-mkdir bin
-cd bin
 git clone https://github.com/jwells00/linux-bin.git ./bin
 ~~~
