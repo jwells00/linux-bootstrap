@@ -37,5 +37,5 @@ echo "--------------------------------------------------------------------------
 mkdir -p ~/.ssh
 chmod 0700 ~/.ssh
 cd ~/.ssh
-ssh-keygen -t rsa -b 2048 -N "" -C "${USER}@${HOSTNAME}" -f ${HOSTNAME}_id_rsa
+ssh-keygen -t rsa -b 2048 -N "" -C "${USER}@${HOSTNAME}"
 
