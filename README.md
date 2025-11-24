@@ -55,7 +55,8 @@ cat ~/.ssh/${HOSTNAME}_id_rsa.pub
    Then click "Add SSH Key" button.
 
 ### Setup ~/bin
+Note: As of Nov-2025, this repo is private so we have to use the "git" URL instead of the "https" one.
 ~~~
 cd ~
-git clone https://github.com/jwells00/linux-bin.git ./bin
+git clone git@github.com:jwells00/linux-bin.git ./bin
 ~~~
