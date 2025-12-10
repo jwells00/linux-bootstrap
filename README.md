@@ -12,7 +12,7 @@ Linux Setup Checklist
 2. Configure a profile/session for the new VM in your SSH terminal emulator
    of choice (SecureCRT, Putty, etc.) using the correct private key.
 
-3. Logon to new VM as opc user and run configuration steps below.
+3. Logon to the new VM as the "opc" user and run configuration steps below.
 
 Configuration Steps
 ------------------------
