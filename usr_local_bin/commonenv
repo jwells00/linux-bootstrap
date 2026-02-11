@@ -48,3 +48,27 @@ alias ptree='pstree -Ahp'
 alias mon='nmon'
 alias tree='tree -A'
 
+# -----------------------------------------------------------------------------
+# Functions - General Utility
+# -----------------------------------------------------------------------------
+#
+# Since the "pathmunge" function has never been a standard part of the Linux
+# kernel or a universal command across all distributions, RHEL distros unset
+# it in the /etc/profile after their internal use of it, so that users do not
+# unknowingly start using it thinking it is a standard across all Linux flavors.
+# However, we like it so add it back as a properly supported customization
+# here in this script!
+#
+pathmunge () {
+    case ":${PATH}:" in
+        *:"$1":*)
+            ;;
+        *)
+            if [ "$2" = "after" ] ; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
+    esac
+}
+
