@@ -53,13 +53,17 @@ alias tree='tree -A'
 # -----------------------------------------------------------------------------
 #
 # Since the "pathmunge" function has never been a standard part of the Linux
-# kernel or a universal command across all distributions, RHEL distros unset
-# it in the /etc/profile after their internal use of it, so that users do not
-# unknowingly start using it thinking it is a standard across all Linux flavors.
-# However, we like it so add it back as a properly supported customization
-# here in this script!
+# kernel, or a universal command across all distributions, RHEL distros unset
+# it in the standard /etc/profile script after their internal use of it.  This
+# is so that users do not unknowingly begin calling the pathmunge function in
+# their own scripts thinking it is a standard across all Linux flavors.
+# However, we like it, so add it back as a properly supported customization
+# here in this script.  One caveat though, since this script is itself sourced
+# during login by that same /etc/profile script, it means that we cannot use
+# the same name "pathmunge" since any function with that name would be unset
+# at the end of the login process!  This is why it is named "pathmunge2".
 #
-pathmunge () {
+pathmunge2 () {
     case ":${PATH}:" in
         *:"$1":*)
             ;;
