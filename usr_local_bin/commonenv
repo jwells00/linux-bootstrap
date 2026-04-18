@@ -1,17 +1,19 @@
 #!/bin/bash
 #
-# Convenience Dental ASG script to setup preferred environment.
+# Convenience script to setup preferred environment.
 #
 # This script should be sourced to set the users environment properly.  Check for this:
 [[ "${BASH_SOURCE[0]}" = "${0}" ]] && echo "This script should be sourced... like this: \". ${BASH_SOURCE[0]}\""
 
 #
-# Screen uses "Dynamic Prompts" via the "null title-escape-sequence" (ESC k ESC \) as
-# part of your prompt.  In RHEL6, there was a bug in /etc/bashrc for PROMPT_COMMAND
-# which is fixed in RHEL7.  But now it causes screen titles to be dynamic, so change
-# PROMPT_COMMAND so it will just display the username as the screen title:
+# The "screen" utility uses "Dynamic Prompts" via the "null title-escape-sequence" (ESC k ESC \)
+# as part of your prompt.  In RHEL6, there was a bug in /etc/bashrc for PROMPT_COMMAND which is
+# fixed in RHEL7.  But now it causes screen titles to be dynamic, so change PROMPT_COMMAND so it
+# will just display the username as the screen title:
 #
-#PROMPT_COMMAND='printf "\033k%s\033\\" "${USER}"'; export PROMPT_COMMAND
+# (this command still needs work because when you are not running screen you see a double prompt
+#  with the first line showing the username... comment out for now)
+# PROMPT_COMMAND='printf "\033k%s\033\\" "${USER}"'; export PROMPT_COMMAND
 
 #
 # Set command prompt to:
@@ -28,7 +30,18 @@ export PATH=.:$PATH
 # Ensure your terminal emulator is configured to support UTF8 charset.  For SecureCRT:
 # Session Options, Terminal, Appearance, in "Character encoding" dropdown select "UTF-8".
 # Then set LC_ALL environment variable:
+#
 export LC_ALL=en_US.UTF-8
+
+#
+# Disable behavior of pasted text always being highlighted.
+# Note the if statement is to avoid running the bind command in a non-interactive
+# shell.  The special parameter $- lists all active bash options and if it contains
+# an "i" option it signifies an interactive shell.
+#
+if [[ $- = *i* ]]; then
+	bind 'set enable-bracketed-paste off'
+fi
 
 # -----------------------------------------------------------------------------
 # Aliases - General Utility
