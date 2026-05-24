@@ -1,0 +1,28 @@
+
+--------------------------------------------------------------------------------
+JW Gitflow for Servers
+--------------------------------------------------------------------------------
+# Tell me if I am behind or ahead of the remote repo, or have untracked changes:
+git fetch origin && git status
+
+# If behind the remote, ensure new changes sit cleanly on top of previous work:
+git pull --rebase
+
+# Existing script: make changes and immediately commit:
+vi myscript.sh
+git commit -m "Fixed scenario on server Y." myscript.sh
+
+# New script: make changes and immediately:
+vi mynewscript.sh
+git add mynewscript.sh
+git commit -m "Initial creation." mynewscript.sh
+  
+# "Safe Push" (after an extended testing period)
+git pull --rebase
+git push
+  
+# Stash Stale Work (Optional)
+git stash
+git pull --rebase
+git stash pop
+
