@@ -61,6 +61,8 @@ alias ptree='pstree -Ahp'
 alias mon='nmon'
 alias tree='tree -A'
 alias githelp='curl https://raw.githubusercontent.com/jwells00/jwells00.github.io/refs/heads/main/git-commands.md'
+alias githelp2='cat ~/repos/README.txt'
+alias gitjw='cat ~/repos/jw_gitflow.txt'
 
 # -----------------------------------------------------------------------------
 # Functions - General Utility
